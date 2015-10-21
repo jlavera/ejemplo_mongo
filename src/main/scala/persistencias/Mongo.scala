@@ -5,7 +5,7 @@ import com.mongodb.casbah.Imports._
 import video.{Pelicula, Episodio, Archivo}
 
 class Mongo extends Persistencia("MongoDB"){
-  val Mongo_Dir = "192.168.0.110"
+  val Mongo_Dir = "localhost"
   val Mongo_Port = 27017
   val Mongo_DB = "subtitulos"
   val Mongo_Collection = "videos"

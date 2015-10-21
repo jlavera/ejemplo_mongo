@@ -9,6 +9,7 @@ import scala.io.{Codec, Source}
 import scala.reflect.io.{Directory, File}
 
 class SRT extends Formato("srt") {
+
   def levantarArchivo(archivo: Archivo) = {
     //--Ir guardando las líneas a parsear
     var lines: List[String] = List[String]()
@@ -35,5 +36,5 @@ class SRT extends Formato("srt") {
       }
     }
   }
-}
 
+}

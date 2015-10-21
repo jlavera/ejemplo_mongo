@@ -48,10 +48,23 @@ BEGIN
 	INSERT INTO Episodio (id, num_episodio,temporada_id) VALUES (id_video, numero_episodio_serie, id_temporada);
 END
 
-CREATE DEFINER=`remote`@`%` PROCEDURE `insertTexto`(IN id_video INT, texto TEXT, inicio DateTime, fin DateTime, orden INT)
+CREATE PROCEDURE `insertTexto`(IN id_video INT, texto TEXT, inicio DateTime, fin DateTime, orden INT)
 BEGIN
 	INSERT INTO Texto (video_id, texto, tiempo_inicio, tiempo_fin, orden) VALUES 
 		(id_Video, texto, inicio, fin, orden);
+END
+
+CREATE PROCEDURE `clear`()
+BEGIN
+	SET FOREIGN_KEY_CHECKS=0;
+	truncate table Texto;
+	truncate table Pelicula;
+	truncate table Episodio;
+	truncate table Serie;
+	truncate table Temporada;
+	truncate table Video;
+	truncate table Lenguaje;
+	SET FOREIGN_KEY_CHECKS=1;
 END
 
 DELIMITER ;

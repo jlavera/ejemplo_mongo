@@ -9,10 +9,10 @@ import scala.slick.jdbc.StaticQuery
 
 class MySql extends Persistencia("MySQL") {
 
-  val Mysql_Dir = "192.168.0.110"
+  val Mysql_Dir = "localhost"
   val Mysql_Port = 3306
-  val Mysql_User = "remote"
-  val Mysql_Pass = "123-remote"
+  val Mysql_User = "root"
+  val Mysql_Pass = "123"
   val Mysql_DB = "Subtitles"
 
   val db = Database.forURL(
@@ -57,7 +57,7 @@ class MySql extends Persistencia("MySQL") {
 
   //CREATE FUNCTION insertVideo(unNombre varchar(30),unLenguaje varchar(30), unTipo varchar(3)) returns int
   def insertVideo(nombre: String, lenguaje: String, tipo: String)(implicit session: Session): Int = {
-    StaticQuery.queryNA[Int]("select insertVideo('" + nombre + "', '" + lenguaje + "', '" + tipo + "')").first
+    StaticQuery.queryNA[Int]("select insertVideo('" + nombre + "', '" + lenguaje + "', '" + tipo + "') LIMIT 1").first
   }
 
   //CREATE PROCEDURE insertPelicula(IN id_video INT,IN anio INT)
