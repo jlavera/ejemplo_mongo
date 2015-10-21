@@ -2,7 +2,7 @@ package persistencias
 
 import java.sql.{Date, Timestamp, CallableStatement}
 
-import org.joda.time.DateTime
+import org.joda.time.{DateTimeZone, DateTime}
 import video.{Pelicula, Episodio, Archivo}
 import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.jdbc.StaticQuery
@@ -86,8 +86,8 @@ class MySql extends Persistencia("MySQL") {
     val cs = session.conn.prepareCall(procSQL)
     cs.setInt(1, idVideo)
     cs.setString(2, texto)
-    cs.setDate(3, new Date(inicio.getMillis))
-    cs.setDate(4, new Date(fin.getMillis))
+    cs.setTimestamp(3, new Timestamp(inicio.getMillis))
+    cs.setTimestamp(4, new Timestamp(fin.getMillis))
     cs.setInt(5, orden)
     cs.execute
   }

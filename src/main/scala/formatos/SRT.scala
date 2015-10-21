@@ -18,7 +18,7 @@ class SRT extends Formato("srt") {
     Source.fromFile(archivo.path, "ISO-8859-1").getLines.foreach { line =>
       val _line = line.trim
 
-      //--Línea vacía, texto completo
+      //--Línea vacía => texto completo
       if (_line.isEmpty) {
         if (lines.nonEmpty) {
 

@@ -1,10 +1,12 @@
 import formatos.{Formato, SRT}
+import org.joda.time.DateTimeZone
 import persistencias.{Persistencia, MySql, Mongo}
 import video.Archivo
 
 import scala.reflect.io.Directory
 
 object Main {
+  DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0))
   val Dir_Name = "subs"
 
   val persistencias = List[Persistencia](

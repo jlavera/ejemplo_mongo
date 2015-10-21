@@ -1,10 +1,12 @@
 package persistencias
 
 import com.mongodb.casbah.Imports._
+import com.mongodb.casbah.commons.conversions.scala._
 
 import video.{Pelicula, Episodio, Archivo}
 
 class Mongo extends Persistencia("MongoDB"){
+  RegisterJodaTimeConversionHelpers()
   val Mongo_Dir = "localhost"
   val Mongo_Port = 27017
   val Mongo_DB = "subtitulos"
@@ -25,8 +27,8 @@ class Mongo extends Persistencia("MongoDB"){
     file match {
       //--Agregar los datos de los episodios
       case epi: Episodio => {
-        builder += "nombre_serie" -> epi.nombreSerie
         builder += "temporada" -> epi.temporada
+        builder += "nombre_episodio" -> epi.getNombreEpisodio
         builder += "num_episodio" -> epi.episodio
       }
       case pel: Pelicula => {
@@ -37,8 +39,8 @@ class Mongo extends Persistencia("MongoDB"){
     builder += "textos" -> file.textos.map { texto =>
       MongoDBObject(
         "orden" -> texto.orden,
-        "desde" -> texto.desde.toString("HH:mm:ss,SSS"),
-        "hasta" -> texto.hasta.toString("HH:mm:ss,SSS"),
+        "desde" -> texto.desde,//.toString("yyyy-MM-dd HH:mm:ss.SSS"),
+        "hasta" -> texto.hasta,//.toString("yyyy-MM-dd HH:mm:ss.SSS"),
         "texto" -> texto.texto
       )
     }
