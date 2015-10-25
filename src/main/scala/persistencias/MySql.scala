@@ -34,13 +34,16 @@ class MySql extends Persistencia("MySQL") {
   def doPersistir(file: Archivo) = {
     db.withSession { implicit session => {
 
+      var video_id = 0
       //--Insertar archivo
-      var video_id = file match {
-        case epi: Episodio => {
-          insertVideo(epi)
+      file match {
+        case episodio: Episodio => {
+          video_id = insertVideo(episodio.getNombreEpisodio, episodio.lenguaje, episodio.getTipo)
+          insertEpisodio(video_id, episodio)
         }
-        case pel: Pelicula => {
-          insertVideo(pel)
+        case pelicula: Pelicula => {
+          video_id = insertVideo(pelicula.getNombreFinal, pelicula.lenguaje, pelicula.getTipo)
+          insertPelicula(video_id, pelicula)
         }
       }
 
@@ -50,17 +53,6 @@ class MySql extends Persistencia("MySQL") {
       }
 
     }}
-  }
-
-  def insertVideo(episodio: Episodio)(implicit session:Session): Int = {
-    var video_id = insertVideo(episodio.getNombreEpisodio, episodio.lenguaje, episodio.getTipo)
-    insertEpisodio(video_id, episodio)
-    video_id
-  }
-  def insertVideo(pelicula: Pelicula)(implicit session:Session): Int = {
-    var video_id = insertVideo(pelicula.getNombreFinal, pelicula.lenguaje, pelicula.getTipo)
-    insertPelicula(video_id, pelicula)
-    video_id
   }
 
   //CREATE FUNCTION insertVideo(unNombre varchar(30),unLenguaje varchar(30), unTipo varchar(3)) returns int
